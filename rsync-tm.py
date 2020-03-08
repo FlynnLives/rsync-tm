@@ -29,7 +29,6 @@ SNAP_RSYNC_CMD = [
         SNAP_SOURCE_DIR
         SNAP_MIRROR]
 
-
 #Return list of snapshot dir paths, sorted as newest first, oldest last.
 #@prefix: filter only snapshot dirs that start with this string
 def _get_snapshots(prefix):
@@ -66,8 +65,8 @@ def _delete_directory(path):
     shutil.rmtree(path)
 
 #The snapshot dir names are ascii-sortable. Year, month, and day are fixed length fields.
-This is crash-safe and easier than trying to shuffle .1, .2, .3 dirs on every rotation."""
-def _get_daily_snapshot_name():""
+#This is crash-safe and easier than trying to shuffle .1, .2, .3 dirs on every rotation.
+def _get_daily_snapshot_name():
     dt = time.strftime("%Y-%m-%d", time.localtime())
     name = SNAP_DAILY_PREFIX + dt
     return os.path.join(SNAP_DEST_DIR, name)
@@ -92,18 +91,15 @@ def _create_snapshot(snap):
     # Clean up any previous failure
     if os.path.exists(SNAP_TMP):
         _delete_directory(SNAP_TMP)
-
     if os.path.exists(snap):
         _print("snapshot %s already exists" % snap)
         return
-
     _print("Linking new snapshot: %s" % snap)
     args = ["cp", "-al", SNAP_MIRROR, SNAP_TMP]
     p = subprocess.Popen(args)
     rc = p.wait()
     if rc != 0:
         raise Exception("cp failed")
-
     # Success: atomically rename it to an official snapshot
     os.rename(SNAP_TMP, snap)
 
