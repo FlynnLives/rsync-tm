@@ -1,7 +1,7 @@
 
 # rsync-tm
 
-A simple python script to maintain daily and monthly backups similar to [TimeMachine](https://en.wikipedia.org/wiki/Time_Machine_(macOS)) using [rsync](https://en.wikipedia.org/wiki/Rsync)
+A simple python script to maintain daily and monthly backups similar to [TimeMachine](https://en.wikipedia.org/wiki/Time_Machine_(macOS)) but without the annoyance
 
 Makes daily and monthly snapshots a specific path, hard linked to save space when files don't change.
 
@@ -42,9 +42,9 @@ Features:
 
 **`SNAP_TMP`**
 
-* The temporary directory for your backup, copies to **`SNAP_DEST_DIR\snapshot_tmp`** 
+* The temporary directory for your backup, copies to **`SNAP_DEST_DIR\snapshot_tmp`**
 
-**`SNAP_MIRROR`** - 
+**`SNAP_MIRROR`** -
 
 **`SNAP_RSYNC_CMD`**
 
@@ -53,13 +53,13 @@ Features:
 
 ## Usage
 The first time you should run the script manually **`python rsync-tm.py`** Do not pass any arguments to the script as this may cause undesired operation
-After you are happy with the script you should setup a crontab so it runs automatically 
+After you are happy with the script you should setup a crontab so it runs automatically
 
-## Crontab 
+## Crontab
 You can setup crontab to run this script for you automatically. This works on MacOS and Linux
 
 As yourself open a terminal and type **`crontab -e`**
 
 	0 0 * * * /usr/bin/python /Users/username/scripts/rsync-tm.py >/Volumes/backup/backup-$(date +%Y-%m-%d).log 2>&1
-	
+
 This will run the script every day at **Midnight** and pipe the output to the backup drive. It is recommended to use the full path to **python**, you can find this by running **`which python`**. You can of course change the path of the script and output log location to wherever you would like
